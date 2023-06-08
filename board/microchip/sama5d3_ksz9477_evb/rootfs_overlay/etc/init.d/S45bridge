@@ -36,14 +36,14 @@ create_br_dev() {
     [ $VLAN -eq 0 ] && exit 0
 
 #    IP=$(ifconfig eth$ETH | grep "inet addr" | cut -d":" -f2 | cut -d" " -f1)
-    IP=$(ifconfig eth$ETH | grep "inet " | cut -F3)
+    IP=$(ip -f inet addr show eth$ETH | grep -Po 'inet \K[\d.]+')
     SUBNET1=$(echo "$IP" | cut -d"." -f1)
     SUBNET2=$(echo "$IP" | cut -d"." -f2)
     SUBNET3=$(echo "$IP" | cut -d"." -f3)
     SUBNET4=$(echo "$IP" | cut -d"." -f4)
 
 #    MAC=$(ifconfig eth$ETH | grep "HWaddr " | cut -d" " -f11)
-    MAC=$(ifconfig eth$ETH | grep "ether " | cut -F3)
+    MAC=$(cat /sys/class/net/eth$ETH/address)
     MAC_1=$(echo $MAC | cut -d":" -f1)
     MAC_2=$(echo $MAC | cut -d":" -f2)
     MAC_3=$(echo $MAC | cut -d":" -f3)
