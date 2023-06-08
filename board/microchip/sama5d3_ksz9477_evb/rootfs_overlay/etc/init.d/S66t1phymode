@@ -18,7 +18,7 @@ configure_t1phymode() {
     p=$START
     while [ $p -lt $PORTS ]; do
         if [ -f "/sys/class/net/$ETHDEV$p/of_node/phy-mode" ]; then
-		t1port=$(cat /sys/class/net/$ETHDEV$p/of_node/phy-mode)
+		t1port=$(tr -d '\0' </sys/class/net/$ETHDEV$p/of_node/phy-mode)
 		if [ $t1port = "internal" ]; then
 			temp=$((1<<p))
 			if [ $((mode & temp)) -eq $temp ]; then
