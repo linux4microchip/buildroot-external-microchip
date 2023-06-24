@@ -45,3 +45,5 @@ source "$BR2_EXTERNAL_MCHP_PATH/system/Config.in"
 source "$BR2_EXTERNAL_MCHP_PATH/package/libosmscout/Config.in"
 
 source "$BR2_EXTERNAL_MCHP_PATH/package/video-capture-at91/Config.in"
+
+source "$BR2_EXTERNAL_MCHP_PATH/boot/hss/Config.in"
