@@ -27,7 +27,7 @@ define HSS_BUILD_CMDS
 	$(MAKE) $(HSS_MAKE_OPTS) -C $(@D)
 endef
 
-define HSS_INSTALL_CMDS
+define HSS_INSTALL_TARGET_CMDS
 	$(INSTALL) -m 0644 -D $(@D)/Default/hss-envm-wrapper.bin $(BINARIES_DIR)/hss-envm-wrapper.bin
 	$(INSTALL) -m 0644 -D $(@D)/Default/hss-l2scratch.bin $(BINARIES_DIR)/hss-l2scratch.bin
 endef
