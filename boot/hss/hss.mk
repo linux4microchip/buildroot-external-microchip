@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-HSS_VERSION = v2023.02.1
+HSS_VERSION = v2023.06
 HSS_SITE = $(call github,polarfire-soc,hart-software-services,$(HSS_VERSION))
 
 ifeq ($(BR2_TARGET_HSS_SC_INSTALL_DIR),)
