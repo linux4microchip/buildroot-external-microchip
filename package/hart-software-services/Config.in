@@ -1,0 +1,4 @@
+config BR2_PACKAGE_HART_SOFTWARE_SERVICES
+	bool "hart-software-services"
+	help
+	  Microchip Hart Software Services package for PolarFire SOC.
