@@ -29,6 +29,7 @@ define HOST_HSS_PAYLOAD_GENERATOR_BUILD_CMDS
 				$(@D)/tools/hss-payload-generator/amp.elf; \
 		fi; \
 		cd $(@D)/tools/hss-payload-generator; \
+		LD_LIBRARY_PATH=$(HOST_DIR)/lib:$(LD_LIBRARY_PATH) \
 		./hss-payload-generator \
 			-c $(BR2_PACKAGE_HOST_HSS_PAYLOAD_GENERATOR_CFG) \
 			-v $(BINARIES_DIR)/payload.bin; \
