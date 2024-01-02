@@ -7,20 +7,12 @@
 HSS_VERSION = v2023.06
 HSS_SITE = $(call github,polarfire-soc,hart-software-services,$(HSS_VERSION))
 
-ifeq ($(BR2_TARGET_HSS_SC_INSTALL_DIR),)
-	$(error BR2_TARGET_HSS_SC_INSTALL_DIR must be defined)
-endif
-
-ifeq ($(BR2_TARGET_HSS_FPGENPROG),)
-	$(error BR2_TARGET_HSS_FPGENPROG must be defined)
-endif
-
-SOFTCONSOLE = $(BR2_TARGET_HSS_SC_INSTALL_DIR)
-HSS_MAKE_OPTS += BOARD=mpfs-icicle-kit-es SC_INSTALL_DIR=$(SOFTCONSOLE) FPGENPROG=$(BR2_TARGET_HSS_FPGENPROG) \
-                  PATH=$(SOFTCONSOLE)/riscv-unknown-elf-gcc/bin:$(BR_PATH)
+HSS_MAKE_OPTS += BOARD=mpfs-icicle-kit-es CROSS_COMPILE=riscv64-buildroot-linux-gnu- \
+                   PLATFORM_CFLAGS="-fno-pic" PATH=$(BR_PATH)
 
 define HSS_CONFIGURE_CMDS
 	cp $(@D)/boards/mpfs-icicle-kit-es/def_config $(@D)/.config
+	ln -sf $(STAGING_DIR)/usr/include/gnu/stubs-{lp64d.h,lp64.h}
 endef
 
 define HSS_BUILD_CMDS
