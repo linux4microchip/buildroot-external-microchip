@@ -1,3 +1,4 @@
+After that in the directory "/home/promwad/microchip_buildroot/buildroot-external-microchip/board/microchip/polarberry" you can find script for board flashing. 
 
 There are 4 scipts:
 1) Program_HSS_to_eNVM.sh

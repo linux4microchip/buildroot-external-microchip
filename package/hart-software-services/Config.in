@@ -1,4 +1,27 @@
 config BR2_PACKAGE_HART_SOFTWARE_SERVICES
-	bool "hart-software-services"
+	bool "HSS (Hart-Software-Services) Microsemi First Stage Bootloader"
 	help
 	  Microchip Hart Software Services package for PolarFire SOC.
+
+if BR2_PACKAGE_HART_SOFTWARE_SERVICES
+
+config BR2_PACKAGE_HART_SOFTWARE_SERVICES_CONFIG
+	string "Path to the HSS config file"
+	help
+	  Set here the PATH to the HSS config file
+
+config BR2_PACKAGE_HART_SOFTWARE_SERVICES_BOARD
+	string "Name of the board"
+	help
+	  Set here name of the board you have
+
+config BR2_PACKAGE_HART_SOFTWARE_SERVICES_DIE
+	string "DIE Setting"
+	help
+	  Set here the CHIP setting
+
+config BR2_PACKAGE_HART_SOFTWARE_SERVICES_PACKAGE
+	string "PACKAGE Setting"
+	help
+	  Set here PACKAGE setting
+endif
