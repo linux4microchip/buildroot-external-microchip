@@ -1,10 +1,8 @@
-After that in the directory "/home/promwad/microchip_buildroot/buildroot-external-microchip/board/microchip/polarberry" you can find script for board flashing. 
-
 There are 4 scipts:
-1) Program_HSS_to_eNVM.sh
-2) Program_UBOOT_to_eMMC.sh
-3) Program_LINUX_to_eNVM.sh
-4) Program_ALL_to_Polarberry.sh
+1) program_hss.sh
+2) Program_uboot.sh
+3) Program_linux.sh
+4) Program_all.sh
 
 and settings file: FLASH_CONFIG.CONF
 
@@ -37,11 +35,21 @@ IMAGE_NAME		- here you need to set file name with LINUX image that is placed on 
                           (default value is "fitimage_polarberry.itb", and this file is built by buildroot and placed in "output/images" directory)
 
 
-To start building images via buildroot you need to run this command in buildrood sources:
-1) "make sundancedsp_polarberry_defconfig  BR2_EXTERNAL=../buildroot-external-microchip"
-   (where BR2_EXTERNAL shall point to the mbuildroot microsemi sources).
+To start building images via buildroot you need:
 
-2) "make"
+1) Microchip Softconsole shall be installed (Microchip-SoftConsole-v2022.2-RISC-V-747-linux-x64-installer.run)
+2) Microchip Program Debug tools shall be installed (Program_Debug_PolarFire_v2023.2_SP1.bin)
+
+3) run this command in buildrood sources:
+
+3.1)  "make sundancedsp_polarberry_defconfig  BR2_EXTERNAL=../buildroot-external-microchip"
+   (where BR2_EXTERNAL shall point to the buildroot microsemi sources).
+
+3.2) "make"
+
+
+
+
     Building will take time. Succesfull building will finish like this:
 
 FIT description: Linux fitImage for Polaberry

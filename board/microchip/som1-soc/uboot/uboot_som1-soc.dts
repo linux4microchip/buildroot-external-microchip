@@ -183,11 +183,6 @@
 	phy-mode = "sgmii";
 	phy-handle = <&phy5>;
 
-/*	phy4: ethernet-phy@4 {
-		reg = <4>;
-		ti,fifo-depth = <0x01>;
-	};
-*/
 	phy5: ethernet-phy@5 {
 		reg = <5>;
 		ti,fifo-depth = <0x01>;

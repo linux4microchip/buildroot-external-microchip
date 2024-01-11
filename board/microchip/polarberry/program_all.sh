@@ -2,9 +2,9 @@
 
 source ./FLASH_CONFIG.CONF
 
-./Program_HSS_to_eNVM.sh
-./Program_UBOOT_to_eMMC.sh
+./program_hss.sh
+./program_uboot.sh
 
 echo "reset" > $UART_DEVICE
 
-./Program_LINUX_to_eMMC.sh
+./program_linux.sh
