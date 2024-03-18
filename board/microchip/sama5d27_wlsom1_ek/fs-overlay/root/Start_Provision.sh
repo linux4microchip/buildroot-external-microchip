@@ -1,19 +1,6 @@
-#!/bin/sh
-cat << 'EOT' > /etc/init.d/S85start_wlan 
-#!/bin/sh
-case "$1" in
-        start)
-		modprobe wilc-sdio
-                sh /root/Start_AP.sh
-                ;;
-        stop)
-                ifconfig wlan0 down
-		modprobe -r wilc-sdio
-                ;;
-esac
-exit 0
-EOT
-chmod 0755 /etc/init.d/S85start_wlan
-ifconfig wlan0 down
+cp /usr/lib/systemd/system/hostapd@.service.example /etc/systemd/system/hostapd@.service
+cp /usr/lib/systemd/network/80-wifi-softap.network.example /etc/systemd/network/wlan0.network
+systemctl add-wants multi-user.target hostapd@open.service
+networkctl down wlan0
 reboot
 
