@@ -10,7 +10,7 @@ board_name=sama5d3_eds
 bootargs=console=ttyS0,115200 mtdparts=atmel_nand:256k(bootstrap)ro,768k(uboot)ro,256k(env_redundant),256k(env),6656k(itb)ro,-(rootfs) root=/dev/mmcblk0p2 rw rootwait rootfstype=ext4
 _bootcmd=run at91_set_display; run at91_pda_detect; run at91_prepare_video_bootargs; run at91_prepare_bootargs; run at91_prepare_overlays_config; run bootcmd_boot;
 bootcmd=run at91_prepare_overlays_config; run bootcmd_boot;
-bootcmd_boot=fatload mmc 0:1 ${loadaddr} ${board_name}.itb; bootm ${loadaddr}#kernel_dtb${at91_overlays_config};
+bootcmd_boot=fatload mmc 0:1 ${loadaddr} ${board_name}.itb; bootm ${loadaddr}#kernel_dtb#spi1_spidev#iocon1_ksz8851${at91_overlays_config};
 bootdelay=1
 loadaddr=0x21000000
 ethaddr=00:10:a0:94:77:20
