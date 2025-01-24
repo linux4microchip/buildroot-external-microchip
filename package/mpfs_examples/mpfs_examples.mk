@@ -1,11 +1,10 @@
 ################################################################################
- #
- # Microchip PolarFire SoC Examples
- #
+#
+# Microchip PolarFire SoC Examples
+#
 ################################################################################
-MPFS_EXAMPLES_VERSION = v2023.02
-MPFS_EXAMPLES_SITE = https://github.com/polarfire-soc/polarfire-soc-linux-examples.git
-MPFS_EXAMPLES_SITE_METHOD = git
+MPFS_EXAMPLES_VERSION = 2024.09
+MPFS_EXAMPLES_SITE = $(call github,polarfire-soc,polarfire-soc-linux-examples,v$(MPFS_EXAMPLES_VERSION))
 MPFS_EXAMPLES_LICENSE = MIT
 MPFS_EXAMPLES_LICENSE_FILES = LICENSE
 MPFS_EXAMPLE_DIRS += amp can gpio system-services ethernet fpga-fabric-interfaces dma dt-overlays pdma
@@ -26,10 +25,13 @@ define MPFS_EXAMPLES_INSTALL_TARGET_CMDS
 
 	echo $(MPFS_EXAMPLE_FILES)
 	$(foreach example_file,$(MPFS_EXAMPLE_FILES), \
-		$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)/$(dir $(example_file)) $(notdir $(example_file)) CC=$(TARGET_CC); \
-			$(INSTALL) -D -m 775 $(@D)/$(example_file) $(TARGET_DIR)$(MPFS_EXAMPLE_TARGET_DIR)/$(dir $(example_file));)
+		$(TARGET_MAKE_ENV) $(MAKE) -C $(@D)/$(dir $(example_file)) \
+		$(notdir $(example_file)) CC=$(TARGET_CC); \
+			$(INSTALL) -D -m 775 $(@D)/$(example_file) \
+			$(TARGET_DIR)$(MPFS_EXAMPLE_TARGET_DIR)/$(dir $(example_file));)
 
-	ln -sf $(MPFS_EXAMPLE_TARGET_DIR)/ethernet/iio-http-server  $(TARGET_DIR)$(MPFS_EXAMPLE_TARGET_DIR)/iiohttpserver
+	ln -sf $(MPFS_EXAMPLE_TARGET_DIR)/ethernet/iio-http-server \
+	$(TARGET_DIR)$(MPFS_EXAMPLE_TARGET_DIR)/iiohttpserver
 endef
 
 define MPFS_EXAMPLES_INSTALL_INIT_SYSTEMD
