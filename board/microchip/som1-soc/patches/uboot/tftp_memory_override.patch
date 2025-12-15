@@ -1,0 +1,12 @@
+diff -ruN A/net/tftp.c B/net/tftp.c
+--- A/net/tftp.c	2023-10-31 02:41:28.000000000 -0700
++++ B/net/tftp.c	2023-11-21 12:55:45.687374117 -0800
+@@ -22,6 +22,8 @@
+ 
+ DECLARE_GLOBAL_DATA_PTR;
+ 
++#undef CONFIG_LMB
++
+ /* Well known TFTP port # */
+ #define WELL_KNOWN_PORT	69
+ /* Millisecs to timeout for lost pkt */
