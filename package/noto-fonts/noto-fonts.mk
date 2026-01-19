@@ -4,27 +4,33 @@
 #
 ################################################################################
 
-NOTO_FONTS_VERSION = 2017-10-24
-NOTO_FONTS_SITE = https://noto-website-2.storage.googleapis.com/pkgs
-NOTO_FONTS_SOURCE = Noto-unhinted.zip
-NOTO_FONTS_DEPENDENCIES = host-zip
+NOTO_FONTS_VERSION = 2025-01
+NOTO_FONTS_SOURCE =
+NOTO_FONTS_LICENSE = OFL-1.1
 
 NOTO_FONTS_FONTS = \
 	$(call qstrip,$(BR2_PACKAGE_NOTO_FONTS_FONTS))
 
-NOTO_FONTS_LICENSE = OFL-1.1
-NOTO_FONTS_LICENSE_FILES += LICENSE_OFL.txt
+# Map font filenames to their respective GitHub URLs
+NOTO_FONTS_URL_NotoSans-Regular.ttf = https://github.com/notofonts/notofonts.github.io/raw/main/fonts/NotoSans/unhinted/ttf/NotoSans-Regular.ttf
+NOTO_FONTS_URL_NotoSansCJKsc-Regular.otf = https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/SimplifiedChinese/NotoSansCJKsc-Regular.otf
+NOTO_FONTS_URL_NotoColorEmoji.ttf = https://github.com/googlefonts/noto-emoji/raw/main/fonts/NotoColorEmoji.ttf
 
 define NOTO_FONTS_EXTRACT_CMDS
-        $(UNZIP) -d $(@D) $(NOTO_FONTS_DL_DIR)/$(NOTO_FONTS_SOURCE)
-        #mv $(@D)/noto-fonts-$(NOTO_FONTS_VERSION)/* $(@D)
-        #$(RM) -r $(@D)/noto-fonts-$(NOTO_FONTS_VERSION)
+	mkdir -p $(@D)
+	$(foreach f,$(NOTO_FONTS_FONTS), \
+		$(if $(NOTO_FONTS_URL_$(f)), \
+			wget -O $(@D)/$(f) $(NOTO_FONTS_URL_$(f)) || exit 1; \
+		, \
+			$(error Unknown Noto font: $(f). Please add URL mapping for this font) \
+		) \
+	)
 endef
 
 define NOTO_FONTS_INSTALL_TARGET_CMDS
+	mkdir -p $(TARGET_DIR)/usr/share/fonts/noto
 	$(foreach f,$(NOTO_FONTS_FONTS), \
-		mkdir -p $(TARGET_DIR)/usr/share/fonts/noto
-		$(INSTALL) -m 0644 -t $(TARGET_DIR)/usr/share/fonts/noto $(@D)/$(f)
+		$(INSTALL) -m 0644 -t $(TARGET_DIR)/usr/share/fonts/noto $(@D)/$(f)$(sep) \
 	)
 endef
 
