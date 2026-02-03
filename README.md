@@ -19,6 +19,10 @@ dependencies are required.
     gperf gawk expat curl cvs libexpat-dev bzr unzip bc python3-dev \
     wget cpio rsync xxd bmap-tools libgnutls28-dev
 
+For AT91 boards, download and extract the [SAM-BA in-system programmer][16],
+then add the extracted directory to your $PATH environment variable to ensure
+the `sam-ba` binary can be located by buildroot.
+
 In some cases, buildroot will notify that additional host dependencies are
 required.  It will let you know what those are.
 
@@ -336,3 +340,4 @@ information.
 [13]: https://github.com/polarfire-soc/icicle-kit-reference-design/releases
 [14]: https://github.com/linux4microchip/buildroot-external-microchip/releases/tag/linux4microchip%2Bfpga-2022.11
 [15]: https://github.com/polarfire-soc/polarfire-soc-discovery-kit-reference-design/releases
+[16]: https://www.microchip.com/en-us/development-tool/SAM-BA-In-system-Programmer
