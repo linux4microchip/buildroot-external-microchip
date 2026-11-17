@@ -1,0 +1,109 @@
+There are 4 scipts:
+1) program_hss.sh
+2) Program_uboot.sh
+3) Program_linux.sh
+4) Program_all.sh
+
+and settings file: FLASH_CONFIG.CONF
+
+Script is used to burn images to the Polarberry board.
+
+The 1th is used to program ONLY HSS bootloader umage to the Polarberry board.
+The 2th is used to program ONLY UBOOT image to the Polarberry board.
+The 3th is used to program ONLY LINUX (Kernel and root filesystem, bith) image to the Polarberry board.
+The 4th is used to program ALL (HSS, UBOOT, LINUX) images to the Polarberry oard.
+
+
+The 1th script can be used with virgin Polarberry boards and requires ONLY JTAG connection with the board.
+The 2th script can be used only after 1th was used (it means UBOOT programming requires HSS was installed before) 
+    and requires JTAG and UART connection with the board.
+The 3th script can be used only after 2th was used (it means Linux programming requires UBOOT (as HSS toot)
+    was installed before) and requires JTAG, UART and ETHERNET connection with the board.
+The 4th script runs 1,2,3 one-by-one and do all thunigs that do 1,2,3 in automatic mode and requires JTAG
+    UART and ETHERNET connection with the board. Can be used with virgin Polarberry boards too.
+
+Before script can be used, you need to fix values in FLASH_CONFIG.CONF according to your PC.
+The file contains strings with comments, so you can advice what you need:
+
+BUILDROOT_DIRECTORY	- here you need to set PATH to the buildroot you are using
+UART_DEVICE		- here you need to set the name of the UART in your system. (/dev/ttyUSB1 for example)
+DEVICE_IP		- here you need to set IP ADDRESS that will be set on the board during flashing.
+                          It shall be one of the free/unused IP addresses from you network.
+
+PC_IP			- here you need to set IP ADDRESS of the PC you are using. (It can be obtained via "ifconfig" command)
+IMAGE_NAME		- here you need to set file name with LINUX image that is placed on the TFTP server
+                          (default value is "fitimage_polarberry.itb", and this file is built by buildroot and placed in "output/images" directory)
+
+
+To start building images via buildroot you need:
+
+1) Microchip Softconsole shall be installed (Microchip-SoftConsole-v2022.2-RISC-V-747-linux-x64-installer.run)
+2) Microchip Program Debug tools shall be installed (Program_Debug_PolarFire_v2023.2_SP1.bin)
+
+3) run this command in buildrood sources:
+
+3.1)  "make sundancedsp_polarberry_defconfig  BR2_EXTERNAL=../buildroot-external-microchip"
+   (where BR2_EXTERNAL shall point to the buildroot microsemi sources).
+
+3.2) "make"
+
+
+
+
+    Building will take time. Succesfull building will finish like this:
+
+FIT description: Linux fitImage for Polaberry
+Created:         Wed Nov 22 05:06:16 2023
+ Image 0 (kernel-0)
+  Description:  Linux Kernel
+  Created:      Wed Nov 22 05:06:16 2023
+  Type:         Kernel Image
+  Compression:  uncompressed
+  Data Size:    17612800 Bytes = 17200.00 KiB = 16.80 MiB
+  Architecture: RISC-V
+  OS:           Linux
+  Load Address: 0x80200000
+  Entry Point:  0x80200000
+  Hash algo:    sha256
+  Hash value:   466f36e4c778103ce7ef2fa9dc3456cb1e25d291fe71ab96f3d88ac588004f11
+ Image 1 (fdt-0)
+  Description:  Flattened Device Tree blob
+  Created:      Wed Nov 22 05:06:16 2023
+  Type:         Flat Device Tree
+  Compression:  uncompressed
+  Data Size:    14949 Bytes = 14.60 KiB = 0.01 MiB
+  Architecture: RISC-V
+  Hash algo:    sha256
+  Hash value:   1ccea6c67588f89a9227a5018b98048390728ef3a21ba90cbd69d8ab750843a4
+ Image 2 (ramdisk-0)
+  Description:  ramdisk
+  Created:      Wed Nov 22 05:06:16 2023
+  Type:         RAMDisk Image
+  Compression:  uncompressed
+  Data Size:    4921601 Bytes = 4806.25 KiB = 4.69 MiB
+  Architecture: AArch64
+  OS:           Linux
+  Load Address: unavailable
+  Entry Point:  unavailable
+  Hash algo:    sha256
+  Hash value:   cae144f8a5c8eb441ba01aae3d3dc1c88ea0303afe710e7d7528d04b0e963997
+ Default Configuration: 'conf-1'
+ Configuration 0 (conf-1)
+  Description:  Boot Linux kernel with FDT blob + ramdisk
+  Kernel:       kernel-0
+  Init Ramdisk: ramdisk-0
+  FDT:          fdt-0
+  Hash algo:    sha256
+  Hash value:   unavailable
+ Configuration 1 (conf-2)
+  Description:  Boot Linux kernel with FDT blob
+  Kernel:       kernel-0
+  FDT:          fdt-0
+  Hash algo:    sha256
+  Hash value:   unavailable
+
+
+To flash the images to the Polarberry board:
+1) Fix FLASH_CONFIG.CONF file in the board/microchip/polarberry directory.
+2) Power ON the Polarberry board
+3) run "Program_ALL_to_Polarberry.sh", and wait until all finished.

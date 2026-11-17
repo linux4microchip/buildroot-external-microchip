@@ -1,0 +1,12 @@
+diff -ruN a/sysdeps/unix/sysv/linux/riscv/Makefile b/sysdeps/unix/sysv/linux/riscv/Makefile
+--- a/sysdeps/unix/sysv/linux/riscv/Makefile	2023-02-02 17:43:23.000000000 -0800
++++ b/sysdeps/unix/sysv/linux/riscv/Makefile	2023-06-30 02:18:04.531347540 -0700
+@@ -7,7 +7,7 @@
+ gen-as-const-headers += ucontext_i.sym
+ endif
+ 
+-abi-variants := ilp32 ilp32d lp64 lp64d
++abi-variants := ilp32 ilp32d lp64d
+ 
+ ifeq (,$(filter $(default-abi),$(abi-variants)))
+ $(error Unknown ABI $(default-abi), must be one of $(abi-variants))

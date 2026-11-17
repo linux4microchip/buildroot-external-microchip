@@ -1,0 +1,25 @@
+diff -ruN a/boards/som1-soc/hss_board_init.c b/boards/som1-soc/hss_board_init.c
+--- a/boards/som1-soc/hss_board_init.c	2024-01-10 04:21:31.283722794 -0800
++++ b/boards/som1-soc/hss_board_init.c	2024-01-10 04:08:02.513198414 -0800
+@@ -23,6 +23,8 @@
+ #include "ssmb_ipi.h"
+ #include "hss_registry.h"
+ 
++#include "mss_gpio.h"
++
+ #ifndef __IO
+ #  define __IO volatile
+ #endif
+@@ -79,6 +81,12 @@
+ 
+ bool HSS_BoardLateInit(void)
+ {
++    mHSS_PUTS("Clear (set to HIGH\1) Ethernet PHY RESET: GPIO0_LO, PIN13\n");
++
++    MSS_GPIO_init(GPIO0_LO);
++    MSS_GPIO_config(GPIO0_LO, MSS_GPIO_13, MSS_GPIO_OUTPUT_MODE);
++    MSS_GPIO_set_outputs(GPIO0_LO, MSS_GPIO_13_MASK);
++
+     return true;
+ }
+ 
